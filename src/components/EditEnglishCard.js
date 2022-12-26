@@ -54,6 +54,7 @@ export default function EditEnglishCard() {
   function updateEnglishCard(event) {
     event.stopPropagation();
     setIsEdited(false);
+    console.log(updatedQuestion);
     setEnglishCards((oldCards) =>
       oldCards.map((oldCard) =>
         oldCard.id === currentEnglishCardId
@@ -67,6 +68,7 @@ export default function EditEnglishCard() {
     setToAnswer(false);
     setIsEdited(false);
   }
+
   return (
     <StyledPopUpBackdrop
       id="backdrop_edit-englishCard"

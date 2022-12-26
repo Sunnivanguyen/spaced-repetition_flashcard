@@ -86,7 +86,7 @@ function ContextProvider(props) {
       type: "chinese_card",
       question: question,
       answer: answer,
-      favorited: false,
+      isFavorited: false,
       familiar: 0,
     };
     setChineseCards((oldCards) => [newChineseCard, ...oldCards]);
@@ -114,24 +114,40 @@ function ContextProvider(props) {
     event.stopPropagation();
     setIsEdited(true);
     setToAnswer(false);
-    setCurrentChineseCardId(cardId);
+    if (language === "english") {
+      setCurrentEnglishCardId(cardId);
+    } else if (language === "chinese") {
+      setCurrentChineseCardId(cardId);
+    }
   }
+
   function deleteCard(event, cardId) {
     event.stopPropagation();
+
     if (language === "english") {
       setEnglishCards((oldCards) =>
         oldCards.filter((card) => card.id !== cardId)
       );
-      setFavoriteEnglishItems((oldCards) =>
-        oldCards.filter((card) => card.id !== cardId)
+      const favorited = favoriteEnglishItems.some(
+        (element) => element.id === cardId
       );
+      if (favorited) {
+        setFavoriteEnglishItems((oldCards) =>
+          oldCards.filter((card) => card.id !== cardId)
+        );
+      }
     } else if (language === "chinese") {
       setChineseCards((oldCards) =>
         oldCards.filter((card) => card.id !== cardId)
       );
-      setFavoriteChineseItems((oldCards) =>
-        oldCards.filter((card) => card.id !== cardId)
+      const favorited = favoriteChineseItems.some(
+        (element) => element.id === cardId
       );
+      if (favorited) {
+        setFavoriteChineseItems((oldCards) =>
+          oldCards.filter((card) => card.id !== cardId)
+        );
+      }
     }
   }
 
@@ -148,6 +164,7 @@ function ContextProvider(props) {
   const [favoriteEnglishItems, setFavoriteEnglishItems] = useState(
     JSON.parse(localStorage.getItem("english_favorite")) || []
   );
+
   const [favoriteChineseItems, setFavoriteChineseItems] = useState(
     JSON.parse(localStorage.getItem("chinese_favorite")) || []
   );
@@ -175,6 +192,7 @@ function ContextProvider(props) {
   function toggleEnglishFavorite(e, item) {
     e.stopPropagation();
     setCurrentEnglishCardId(item.id);
+
     const updateArr = englishCards.map((card) => {
       if (card.id === item.id) {
         return { ...card, isFavorited: !card.isFavorited };
@@ -182,13 +200,21 @@ function ContextProvider(props) {
       return card;
     });
     setEnglishCards(updateArr);
+    const favorited = favoriteEnglishItems.some(
+      (element) => element.id === item.id
+    );
+    console.log(favorited);
     for (let i = 0; i < englishCards.length; i++) {
       const card = englishCards[i];
-      if (!card.isFavorited) {
+      if (!favorited && card.id === item.id && !card.isFavorited) {
         addToEnglishFavoriteItems(item.id);
+      } else if (favorited && card.isFavorited) {
+        setFavoriteEnglishItems((oldItems) =>
+          oldItems.filter((item) => item.id !== card.id)
+        );
       }
     }
-    console.log(currentEnglishCard);
+    console.log(favoriteEnglishItems);
   }
 
   function addToChineseFavoriteItems(cardId) {
@@ -203,6 +229,7 @@ function ContextProvider(props) {
   function toggleChineseFavorite(e, item) {
     e.stopPropagation();
     setCurrentChineseCardId(item.id);
+
     const updateArr = chineseCards.map((card) => {
       if (card.id === item.id) {
         return { ...card, isFavorited: !card.isFavorited };
@@ -210,16 +237,64 @@ function ContextProvider(props) {
       return card;
     });
     setChineseCards(updateArr);
+    const favorited = favoriteChineseItems.some(
+      (element) => element.id === item.id
+    );
+
     for (let i = 0; i < chineseCards.length; i++) {
       const card = chineseCards[i];
-      if (!card.isFavorited) {
+      if (!favorited && card.id === item.id && !card.isFavorited) {
         addToChineseFavoriteItems(item.id);
+      } else if (favorited && card.isFavorited) {
+        setFavoriteChineseItems((oldItems) =>
+          oldItems.filter((item) => item.id !== card.id)
+        );
       }
     }
-    console.log(currentChineseCard);
   }
 
-  const [familiarLevelOneCards, setFamiliarLevelOneCards] = useState([]);
+  const [familiarLevelOneCards, setFamiliarLevelOneCards] = useState(
+    JSON.parse(localStorage.getItem("familiar_one")) || []
+  );
+
+  const [familiarLevelTwoCards, setFamiliarLevelTwoCards] = useState(
+    JSON.parse(localStorage.getItem("familiar_two")) || []
+  );
+
+  const [familiarLevelThreeCards, setFamiliarLevelThreeCards] = useState(
+    JSON.parse(localStorage.getItem("familiar_three")) || []
+  );
+
+  const [familiarLevelFourCards, setFamiliarLevelFourCards] = useState(
+    JSON.parse(localStorage.getItem("familiar_four")) || []
+  );
+
+  const [familiarLevelFiveCards, setFamiliarLevelFiveCards] = useState(
+    JSON.parse(localStorage.getItem("familiar_five")) || []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("familiar_one", JSON.stringify(familiarLevelOneCards));
+    localStorage.setItem("familiar_two", JSON.stringify(familiarLevelTwoCards));
+    localStorage.setItem(
+      "familiar_three",
+      JSON.stringify(familiarLevelThreeCards)
+    );
+    localStorage.setItem(
+      "familiar_four",
+      JSON.stringify(familiarLevelFourCards)
+    );
+    localStorage.setItem(
+      "familiar_five",
+      JSON.stringify(familiarLevelFiveCards)
+    );
+  }, [
+    familiarLevelOneCards,
+    familiarLevelTwoCards,
+    familiarLevelThreeCards,
+    familiarLevelFourCards,
+    familiarLevelFiveCards,
+  ]);
 
   useEffect(() => {
     if (document.getElementById("backdrop_review-card")) {
@@ -371,6 +446,14 @@ function ContextProvider(props) {
         toggleChineseFavorite,
         familiarLevelOneCards,
         setFamiliarLevelOneCards,
+        familiarLevelTwoCards,
+        setFamiliarLevelTwoCards,
+        familiarLevelThreeCards,
+        setFamiliarLevelThreeCards,
+        familiarLevelFourCards,
+        setFamiliarLevelFourCards,
+        familiarLevelFiveCards,
+        setFamiliarLevelFiveCards,
       }}
     >
       {props.children}

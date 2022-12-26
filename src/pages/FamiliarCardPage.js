@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../Context";
 import ButtonStyled from "../components/ButtonStyled";
 import { Link } from "react-router-dom";
-import FamiliarItems from "../components/FamiliarItems";
+import FamiliarPages from "../components/FamiliarPages";
 export default function FamiliarCardPage() {
   const { language } = useContext(Context);
   return (
@@ -24,7 +24,7 @@ export default function FamiliarCardPage() {
         )}
       </div>
       <div className="familiar-card_grid">
-        <FamiliarItems />
+        <FamiliarPages />
       </div>
     </div>
   );

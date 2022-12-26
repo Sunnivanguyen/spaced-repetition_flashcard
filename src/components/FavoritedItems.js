@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../Context";
 import ReviewCard from "./ReviewCard";
 import EditEnglishCard from "./EditEnglishCard";
@@ -17,11 +17,80 @@ export default function FavoritedItems() {
     setEnglishCards,
     chineseCards,
     setChineseCards,
+    updatedQuestion,
+    updatedAnswer,
     favoriteEnglishItems,
     favoriteChineseItems,
     setFavoriteEnglishItems,
     setFavoriteChineseItems,
+    currentCard,
   } = useContext(Context);
+
+  useEffect(() => {
+    if (language === "english") {
+      setFavoriteEnglishItems((oldCards) =>
+        oldCards.map((oldCard) =>
+          oldCard.id === currentCard.id
+            ? {
+                ...oldCard,
+                question: currentCard.question,
+                answer: currentCard.answer,
+              }
+            : oldCard
+        )
+      );
+    } else if (language === "chinese") {
+      setFavoriteChineseItems((oldCards) =>
+        oldCards.map((oldCard) =>
+          oldCard.id === currentCard.id
+            ? {
+                ...oldCard,
+                question: currentCard.question,
+                answer: currentCard.answer,
+              }
+            : oldCard
+        )
+      );
+    }
+  }, [
+    currentCard,
+    updatedQuestion,
+    updatedAnswer,
+    setFavoriteChineseItems,
+    setFavoriteEnglishItems,
+    language,
+  ]);
+
+  function editFavoriteCard(event, cardId) {
+    event.stopPropagation();
+    editCard(event, cardId);
+    if (language === "english") {
+      setFavoriteEnglishItems((oldCards) =>
+        oldCards.map((oldCard) =>
+          oldCard.id === cardId
+            ? {
+                ...oldCard,
+                question: currentCard.question,
+                answer: currentCard.answer,
+              }
+            : oldCard
+        )
+      );
+    } else if (language === "chinese") {
+      setFavoriteChineseItems((oldCards) =>
+        oldCards.map((oldCard) =>
+          oldCard.id === cardId
+            ? {
+                ...oldCard,
+                question: currentCard.question,
+                answer: currentCard.answer,
+              }
+            : oldCard
+        )
+      );
+    }
+    console.log(updatedQuestion);
+  }
 
   function deleteFavoriteCard(event, cardId) {
     event.stopPropagation();
@@ -58,7 +127,7 @@ export default function FavoritedItems() {
             className={`card ${
               item.id === currentEnglishCardId ? "selected-card" : ""
             }`}
-            key={item.id}
+            key={`${item.id}_favorite`}
           >
             <div
               className={`card-item ${item.type}`}
@@ -66,7 +135,7 @@ export default function FavoritedItems() {
             >
               <i
                 className="ri-edit-2-line ri-lg"
-                onClick={(event) => editCard(event, item.id)}
+                onClick={(event) => editFavoriteCard(event, item.id)}
               ></i>
               <i
                 className="ri-delete-bin-6-line ri-lg"
@@ -84,7 +153,7 @@ export default function FavoritedItems() {
             className={`card ${
               item.id === currentChineseCardId ? "selected-card" : ""
             }`}
-            key={item.id}
+            key={`${item.id}_favorite`}
           >
             <div
               className={`card-item ${item.type}`}

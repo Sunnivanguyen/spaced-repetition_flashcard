@@ -11,49 +11,77 @@ export default function RankedButtons({ item }) {
     setChineseCards,
     familiarLevelOneCards,
     setFamiliarLevelOneCards,
+    familiarLevelTwoCards,
+    setFamiliarLevelTwoCards,
+    familiarLevelThreeCards,
+    setFamiliarLevelThreeCards,
+    familiarLevelFourCards,
+    setFamiliarLevelFourCards,
+    familiarLevelFiveCards,
+    setFamiliarLevelFiveCards,
+    currentCard,
   } = useContext(Context);
 
-  function getLevelOne() {
+  function getLevel() {
     if (language === "english") {
-      englishCards.map((card) => {
+      for (let i = 0; i < englishCards.length; i++) {
+        const card = englishCards[i];
         if (card.familiar === 1) {
           setFamiliarLevelOneCards((oldCards) => [card, ...oldCards]);
+        } else if (card.familiar === 2) {
+          setFamiliarLevelTwoCards((oldCards) => [card, ...oldCards]);
+        } else if (card.familiar === 3) {
+          setFamiliarLevelThreeCards((oldCards) => [card, ...oldCards]);
+        } else if (card.familiar === 4) {
+          setFamiliarLevelFourCards((oldCards) => [card, ...oldCards]);
+        } else if (card.familiar === 5) {
+          setFamiliarLevelFiveCards((oldCards) => [card, ...oldCards]);
         }
-        return familiarLevelOneCards;
-      });
+      }
     } else if (language === "chinese") {
-      chineseCards.map((card) => {
+      for (let i = 0; i < chineseCards.length; i++) {
+        const card = englishCards[i];
         if (card.familiar === 1) {
           setFamiliarLevelOneCards((oldCards) => [card, ...oldCards]);
+        } else if (card.familiar === 2) {
+          setFamiliarLevelTwoCards((oldCards) => [card, ...oldCards]);
+        } else if (card.familiar === 3) {
+          setFamiliarLevelThreeCards((oldCards) => [card, ...oldCards]);
+        } else if (card.familiar === 4) {
+          setFamiliarLevelFourCards((oldCards) => [card, ...oldCards]);
+        } else if (card.familiar === 5) {
+          setFamiliarLevelFiveCards((oldCards) => [card, ...oldCards]);
         }
-        return familiarLevelOneCards;
-      });
+      }
     }
   }
+
   function setFamiliarLevels(e, num) {
     e.stopPropagation();
     if (language === "english") {
       const updateArr = englishCards.map((card) => {
-        if (card.id === item.id) {
+        if (card.id === currentCard.id) {
           return { ...card, familiar: num };
         }
         return card;
       });
       setEnglishCards(updateArr);
-
-      getLevelOne();
+      getLevel();
     } else if (language === "chinese") {
       const updateArr = chineseCards.map((card) => {
-        if (card.id === item.id) {
+        if (card.id === currentCard.id) {
           return { ...card, familiar: num };
         }
         return card;
       });
       setChineseCards(updateArr);
-      getLevelOne();
+      getLevel();
     }
-    console.log(englishCards);
-    console.log(chineseCards);
+    console.log(familiarLevelOneCards);
+    console.log(familiarLevelTwoCards);
+    console.log(familiarLevelThreeCards);
+    console.log(familiarLevelFourCards);
+    console.log(familiarLevelFiveCards);
   }
 
   const numArray = [1, 2, 3, 4, 5];

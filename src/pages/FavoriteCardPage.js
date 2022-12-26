@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function FavoriteCardPage() {
   const { language } = useContext(Context);
+
   return (
     <div className="container">
       <div className="custom-grid">
