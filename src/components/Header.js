@@ -6,10 +6,10 @@ export default function Header() {
   const { language, setLanguage } = useContext(Context);
   function chooseLanguage() {
     if (language === "english") {
-      return <h2>English FlashCards</h2>;
+      return <h2 className="main-title">English FlashCards</h2>;
     } else if (language === "chinese") {
-      return <h2>Chinese FlashCards</h2>;
-    } else return <h2>Spaced Repetition</h2>;
+      return <h2 className="main-title">Chinese FlashCards</h2>;
+    } else return <h2 className="main-title">Spaced Repetition</h2>;
   }
   return (
     <div className="header">
@@ -23,19 +23,34 @@ export default function Header() {
         <h3>Home</h3>
       </div>
       {chooseLanguage()}
-      <nav className="header-language">
-        <Link to="/englishCard_page">
-          <h3 className="header-english" onClick={() => setLanguage("english")}>
-            English
-          </h3>
-        </Link>
-        <h3>/</h3>
-        <Link to="/chineseCard_page">
-          <h3 className="header-chinese" onClick={() => setLanguage("chinese")}>
-            Chinese
-          </h3>
-        </Link>
-      </nav>
+      <div className="toggler">
+        <div className="toggler-themes">
+          <p className="toggler--light">Light</p>
+          <div className="toggler--slider">
+            <i class="ri-checkbox-blank-circle-fill"></i>
+          </div>
+          <p className="toggler---dark">Dark</p>
+        </div>
+        <nav className="toggler-language">
+          <Link to="/englishCard_page">
+            <h3
+              className="toggler--english"
+              onClick={() => setLanguage("english")}
+            >
+              English
+            </h3>
+          </Link>
+          <h3>/</h3>
+          <Link to="/chineseCard_page">
+            <h3
+              className="toggler--chinese"
+              onClick={() => setLanguage("chinese")}
+            >
+              Chinese
+            </h3>
+          </Link>
+        </nav>
+      </div>
     </div>
   );
 }

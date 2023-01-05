@@ -50,6 +50,7 @@ function ContextProvider(props) {
     setEnglishCards((oldCards) => [newEnglishCard, ...oldCards]);
     setCurrentEnglishCardId(newEnglishCard.id);
     console.log(englishCards);
+    setToAnswer(false);
   }
 
   function findCurrentEnglishCard() {
@@ -92,6 +93,7 @@ function ContextProvider(props) {
     setChineseCards((oldCards) => [newChineseCard, ...oldCards]);
     setCurrentChineseCardId(newChineseCard.id);
     console.log(chineseCards);
+    setToAnswer(false);
   }
 
   function findCurrentChineseCard() {
@@ -253,47 +255,88 @@ function ContextProvider(props) {
     }
   }
 
-  const [familiarLevelOneCards, setFamiliarLevelOneCards] = useState(
-    JSON.parse(localStorage.getItem("familiar_one")) || []
-  );
+  const [familiarLevelOneEnglishCards, setFamiliarLevelOneEnglishCards] =
+    useState(JSON.parse(localStorage.getItem("english-familiar_one")) || []);
+  const [familiarLevelOneChineseCards, setFamiliarLevelOneChineseCards] =
+    useState(JSON.parse(localStorage.getItem("chinese-familiar_one")) || []);
 
-  const [familiarLevelTwoCards, setFamiliarLevelTwoCards] = useState(
-    JSON.parse(localStorage.getItem("familiar_two")) || []
-  );
+  const [familiarLevelTwoEnglishCards, setFamiliarLevelTwoEnglishCards] =
+    useState(JSON.parse(localStorage.getItem("english-familiar_two")) || []);
 
-  const [familiarLevelThreeCards, setFamiliarLevelThreeCards] = useState(
-    JSON.parse(localStorage.getItem("familiar_three")) || []
-  );
+  const [familiarLevelTwoChineseCards, setFamiliarLevelTwoChineseCards] =
+    useState(JSON.parse(localStorage.getItem("chinese-familiar_two")) || []);
 
-  const [familiarLevelFourCards, setFamiliarLevelFourCards] = useState(
-    JSON.parse(localStorage.getItem("familiar_four")) || []
-  );
+  const [familiarLevelThreeEnglishCards, setFamiliarLevelThreeEnglishCards] =
+    useState(JSON.parse(localStorage.getItem("english-familiar_three")) || []);
 
-  const [familiarLevelFiveCards, setFamiliarLevelFiveCards] = useState(
-    JSON.parse(localStorage.getItem("familiar_five")) || []
-  );
+  const [familiarLevelThreeChineseCards, setFamiliarLevelThreeChineseCards] =
+    useState(JSON.parse(localStorage.getItem("chinese-familiar_three")) || []);
+
+  const [familiarLevelFourEnglishCards, setFamiliarLevelFourEnglishCards] =
+    useState(JSON.parse(localStorage.getItem("english-familiar_four")) || []);
+
+  const [familiarLevelFourChineseCards, setFamiliarLevelFourChineseCards] =
+    useState(JSON.parse(localStorage.getItem("chinese-familiar_four")) || []);
+
+  const [familiarLevelFiveEnglishCards, setFamiliarLevelFiveEnglishCards] =
+    useState(JSON.parse(localStorage.getItem("english-familiar_five")) || []);
+
+  const [familiarLevelFiveChineseCards, setFamiliarLevelFiveChineseCards] =
+    useState(JSON.parse(localStorage.getItem("chinese-familiar_five")) || []);
 
   useEffect(() => {
-    localStorage.setItem("familiar_one", JSON.stringify(familiarLevelOneCards));
-    localStorage.setItem("familiar_two", JSON.stringify(familiarLevelTwoCards));
     localStorage.setItem(
-      "familiar_three",
-      JSON.stringify(familiarLevelThreeCards)
+      "english-familiar_one",
+      JSON.stringify(familiarLevelOneEnglishCards)
     );
     localStorage.setItem(
-      "familiar_four",
-      JSON.stringify(familiarLevelFourCards)
+      "english-familiar_two",
+      JSON.stringify(familiarLevelTwoEnglishCards)
     );
     localStorage.setItem(
-      "familiar_five",
-      JSON.stringify(familiarLevelFiveCards)
+      "english-familiar_three",
+      JSON.stringify(familiarLevelThreeEnglishCards)
+    );
+    localStorage.setItem(
+      "english-familiar_four",
+      JSON.stringify(familiarLevelFourEnglishCards)
+    );
+    localStorage.setItem(
+      "english-familiar_five",
+      JSON.stringify(familiarLevelFiveEnglishCards)
+    );
+
+    localStorage.setItem(
+      "chinese-familiar_one",
+      JSON.stringify(familiarLevelOneChineseCards)
+    );
+    localStorage.setItem(
+      "chinese-familiar_two",
+      JSON.stringify(familiarLevelTwoChineseCards)
+    );
+    localStorage.setItem(
+      "chinese-familiar_three",
+      JSON.stringify(familiarLevelThreeChineseCards)
+    );
+    localStorage.setItem(
+      "chinese-familiar_four",
+      JSON.stringify(familiarLevelFourChineseCards)
+    );
+    localStorage.setItem(
+      "chinese-familiar_five",
+      JSON.stringify(familiarLevelFiveChineseCards)
     );
   }, [
-    familiarLevelOneCards,
-    familiarLevelTwoCards,
-    familiarLevelThreeCards,
-    familiarLevelFourCards,
-    familiarLevelFiveCards,
+    familiarLevelOneEnglishCards,
+    familiarLevelTwoEnglishCards,
+    familiarLevelThreeEnglishCards,
+    familiarLevelFourEnglishCards,
+    familiarLevelFiveEnglishCards,
+    familiarLevelOneChineseCards,
+    familiarLevelTwoChineseCards,
+    familiarLevelThreeChineseCards,
+    familiarLevelFourChineseCards,
+    familiarLevelFiveChineseCards,
   ]);
 
   useEffect(() => {
@@ -444,16 +487,26 @@ function ContextProvider(props) {
         currentCard,
         toggleEnglishFavorite,
         toggleChineseFavorite,
-        familiarLevelOneCards,
-        setFamiliarLevelOneCards,
-        familiarLevelTwoCards,
-        setFamiliarLevelTwoCards,
-        familiarLevelThreeCards,
-        setFamiliarLevelThreeCards,
-        familiarLevelFourCards,
-        setFamiliarLevelFourCards,
-        familiarLevelFiveCards,
-        setFamiliarLevelFiveCards,
+        familiarLevelOneEnglishCards,
+        setFamiliarLevelOneEnglishCards,
+        familiarLevelTwoEnglishCards,
+        setFamiliarLevelTwoEnglishCards,
+        familiarLevelThreeEnglishCards,
+        setFamiliarLevelThreeEnglishCards,
+        familiarLevelFourEnglishCards,
+        setFamiliarLevelFourEnglishCards,
+        familiarLevelFiveEnglishCards,
+        setFamiliarLevelFiveEnglishCards,
+        familiarLevelOneChineseCards,
+        setFamiliarLevelOneChineseCards,
+        familiarLevelTwoChineseCards,
+        setFamiliarLevelTwoChineseCards,
+        familiarLevelThreeChineseCards,
+        setFamiliarLevelThreeChineseCards,
+        familiarLevelFourChineseCards,
+        setFamiliarLevelFourChineseCards,
+        familiarLevelFiveChineseCards,
+        setFamiliarLevelFiveChineseCards,
       }}
     >
       {props.children}

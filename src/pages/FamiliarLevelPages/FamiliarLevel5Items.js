@@ -7,21 +7,35 @@ import ReviewCard from "../../components/ReviewCard";
 import EditEnglishCard from "../../components/EditEnglishCard";
 import EditChineseCard from "../../components/EditChineseCard";
 
-export default function FamiliarLevel5Items() {
+export default function FamiliarLevel5Items({
+  toDefaultFamiliarLevel,
+  deleteLeftOver,
+}) {
   const {
     language,
-    familiarLevelFiveCards,
-    setFamiliarLevelFiveCards,
+    familiarLevelFiveEnglishCards,
+    setFamiliarLevelFiveEnglishCards,
+    familiarLevelFiveChineseCards,
+    setFamiliarLevelFiveChineseCards,
     isReviewed,
     isEdited,
     reviewCard,
+    setIsEdited,
   } = useContext(Context);
 
   function deleteFamiliarCard(event, cardId) {
     event.stopPropagation();
-    setFamiliarLevelFiveCards((oldCards) =>
-      oldCards.filter((card) => card.id !== cardId)
-    );
+    if (language === "english") {
+      setFamiliarLevelFiveEnglishCards((oldCards) =>
+        oldCards.filter((card) => card.id !== cardId)
+      );
+    } else if (language === "chinese") {
+      setFamiliarLevelFiveChineseCards((oldCards) =>
+        oldCards.filter((card) => card.id !== cardId)
+      );
+    }
+    toDefaultFamiliarLevel(cardId);
+    deleteLeftOver();
   }
 
   return (
@@ -34,24 +48,48 @@ export default function FamiliarLevel5Items() {
         </Link>
       </div>
       <div className="familiar-card_grid">
-        {familiarLevelFiveCards.map((item) => (
-          <div key={nanoid()} className="card">
-            <div
-              className={`card-item ${item.type}`}
-              onClick={(e) => reviewCard(e, item.id)}
-            >
-              <i className="ri-edit-2-line ri-lg"></i>
-              <i
-                className="ri-delete-bin-6-line ri-lg"
-                onClick={(event) => deleteFamiliarCard(event, item.id)}
-              ></i>
-              <div className="card-body">{item.question}</div>
+        {language === "english" &&
+          familiarLevelFiveEnglishCards.map((item) => (
+            <div key={nanoid()} className="card">
+              <div
+                className={`card-item ${item.type}`}
+                onClick={(e) => reviewCard(e, item.id)}
+              >
+                <i
+                  className="ri-edit-2-line ri-lg"
+                  onClick={() => setIsEdited(!isEdited)}
+                ></i>
+                <i
+                  className="ri-delete-bin-6-line ri-lg"
+                  onClick={(event) => deleteFamiliarCard(event, item.id)}
+                ></i>
+                <div className="card-body">{item.question}</div>
+              </div>
+              {isReviewed && <ReviewCard item={item} />}
+              {isEdited && <EditEnglishCard />}
             </div>
-            {isReviewed && <ReviewCard item={item} />}
-            {isEdited && language === "english" && <EditEnglishCard />}
-            {isEdited && language === "chinese" && <EditChineseCard />}
-          </div>
-        ))}
+          ))}
+        {language === "chinese" &&
+          familiarLevelFiveChineseCards.map((item) => (
+            <div key={nanoid()} className="card">
+              <div
+                className={`card-item ${item.type}`}
+                onClick={(e) => reviewCard(e, item.id)}
+              >
+                <i
+                  className="ri-edit-2-line ri-lg"
+                  onClick={() => setIsEdited(!isEdited)}
+                ></i>
+                <i
+                  className="ri-delete-bin-6-line ri-lg"
+                  onClick={(event) => deleteFamiliarCard(event, item.id)}
+                ></i>
+                <div className="card-body">{item.question}</div>
+              </div>
+              {isReviewed && <ReviewCard item={item} />}
+              {isEdited && <EditChineseCard />}
+            </div>
+          ))}
       </div>
     </div>
   );

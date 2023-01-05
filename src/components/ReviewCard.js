@@ -3,9 +3,11 @@ import styled from "styled-components";
 import { Context } from "../Context";
 import rotateIcon from "../images/rotate-icon.png";
 import RankedButtons from "./RankedButtons";
+import parse from "html-react-parser";
 
 const StyledPopUpBackdrop = styled.div`
-  position: fixed;
+  position: absolute;
+  z-index: 1;
   height: 100%;
   width: 100%;
   display: flex;
@@ -131,14 +133,18 @@ export default function ReviewCard({ item }) {
               style={{ visibility: flip ? "hidden" : "visible" }}
               ref={frontEl}
             >
-              {count === 0 ? currentCard.question : newCurrentCard.question}
+              {count === 0
+                ? parse(currentCard.question)
+                : parse(newCurrentCard.question)}
             </div>
             <div
               className="back"
               style={{ visibility: flip ? "visible" : "hidden" }}
               ref={backEl}
             >
-              {count === 0 ? currentCard.answer : newCurrentCard.answer}
+              {count === 0
+                ? parse(currentCard.answer)
+                : parse(newCurrentCard.answer)}
             </div>
           </div>
           <div

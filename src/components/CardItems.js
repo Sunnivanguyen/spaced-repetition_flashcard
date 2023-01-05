@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import parse from "html-react-parser";
 import { Context } from "../Context";
 import EditEnglishCard from "./EditEnglishCard";
 import EditChineseCard from "./EditChineseCard";
@@ -42,7 +43,7 @@ export default function CardItems() {
                 className="ri-delete-bin-6-line ri-lg"
                 onClick={(event) => deleteCard(event, item.id)}
               ></i>
-              <div className="card-body">{item.question}</div>
+              <div className="card-body">{parse(item.question)}</div>
               {item.isFavorited ? (
                 <i
                   className="ri-heart-3-fill ri-lg heart-icon"
@@ -79,7 +80,7 @@ export default function CardItems() {
                 className="ri-delete-bin-6-line ri-lg"
                 onClick={(event) => deleteCard(event, item.id)}
               ></i>
-              <div className="card-body">{item.question}</div>
+              <div className="card-body">{parse(item.question)}</div>
               {item.isFavorited ? (
                 <i
                   className="ri-heart-3-fill ri-lg heart-icon"

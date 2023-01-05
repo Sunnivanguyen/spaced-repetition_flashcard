@@ -11,9 +11,10 @@ export default function UpdatedAnswerEditor() {
 
   useEffect(() => {
     if (quill) {
-      quill.clipboard.dangerouslyPasteHTML(`<p>${currentCard.answer}</p>`);
+      quill.clipboard.dangerouslyPasteHTML(currentCard.answer);
+      quill.clipboard.dangerouslyPasteHTML(currentCard.answer.length, "");
       quill.on("text-change", (delta, oldDelta, source) => {
-        setUpdatedAnswer(quill.getText());
+        setUpdatedAnswer(quill.root.innerHTML);
       });
     }
   }, [quill, setUpdatedAnswer, currentCard]);

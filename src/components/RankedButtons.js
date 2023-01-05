@@ -9,16 +9,26 @@ export default function RankedButtons({ item }) {
     setEnglishCards,
     chineseCards,
     setChineseCards,
-    familiarLevelOneCards,
-    setFamiliarLevelOneCards,
-    familiarLevelTwoCards,
-    setFamiliarLevelTwoCards,
-    familiarLevelThreeCards,
-    setFamiliarLevelThreeCards,
-    familiarLevelFourCards,
-    setFamiliarLevelFourCards,
-    familiarLevelFiveCards,
-    setFamiliarLevelFiveCards,
+    familiarLevelOneEnglishCards,
+    setFamiliarLevelOneEnglishCards,
+    familiarLevelTwoEnglishCards,
+    setFamiliarLevelTwoEnglishCards,
+    familiarLevelThreeEnglishCards,
+    setFamiliarLevelThreeEnglishCards,
+    familiarLevelFourEnglishCards,
+    setFamiliarLevelFourEnglishCards,
+    familiarLevelFiveEnglishCards,
+    setFamiliarLevelFiveEnglishCards,
+    familiarLevelOneChineseCards,
+    setFamiliarLevelOneChineseCards,
+    familiarLevelTwoChineseCards,
+    setFamiliarLevelTwoChineseCards,
+    familiarLevelThreeChineseCards,
+    setFamiliarLevelThreeChineseCards,
+    familiarLevelFourChineseCards,
+    setFamiliarLevelFourChineseCards,
+    familiarLevelFiveChineseCards,
+    setFamiliarLevelFiveChineseCards,
     currentCard,
   } = useContext(Context);
 
@@ -27,32 +37,136 @@ export default function RankedButtons({ item }) {
       for (let i = 0; i < englishCards.length; i++) {
         const card = englishCards[i];
         if (card.familiar === 1) {
-          setFamiliarLevelOneCards((oldCards) => [card, ...oldCards]);
+          const isFamiliar = familiarLevelOneEnglishCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelOneEnglishCards((oldCards) => [card, ...oldCards]);
+          }
         } else if (card.familiar === 2) {
-          setFamiliarLevelTwoCards((oldCards) => [card, ...oldCards]);
+          const isFamiliar = familiarLevelTwoEnglishCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelTwoEnglishCards((oldCards) => [card, ...oldCards]);
+          }
         } else if (card.familiar === 3) {
-          setFamiliarLevelThreeCards((oldCards) => [card, ...oldCards]);
+          const isFamiliar = familiarLevelThreeEnglishCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelThreeEnglishCards((oldCards) => [
+              card,
+              ...oldCards,
+            ]);
+          }
         } else if (card.familiar === 4) {
-          setFamiliarLevelFourCards((oldCards) => [card, ...oldCards]);
+          const isFamiliar = familiarLevelFourEnglishCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelFourEnglishCards((oldCards) => [card, ...oldCards]);
+          }
         } else if (card.familiar === 5) {
-          setFamiliarLevelFiveCards((oldCards) => [card, ...oldCards]);
+          const isFamiliar = familiarLevelFiveEnglishCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelFiveEnglishCards((oldCards) => [card, ...oldCards]);
+          }
         }
       }
+      console.log(familiarLevelOneEnglishCards);
     } else if (language === "chinese") {
       for (let i = 0; i < chineseCards.length; i++) {
-        const card = englishCards[i];
+        const card = chineseCards[i];
         if (card.familiar === 1) {
-          setFamiliarLevelOneCards((oldCards) => [card, ...oldCards]);
+          const isFamiliar = familiarLevelOneChineseCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelOneChineseCards((oldCards) => [card, ...oldCards]);
+          }
         } else if (card.familiar === 2) {
-          setFamiliarLevelTwoCards((oldCards) => [card, ...oldCards]);
+          const isFamiliar = familiarLevelTwoChineseCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelTwoChineseCards((oldCards) => [card, ...oldCards]);
+          }
         } else if (card.familiar === 3) {
-          setFamiliarLevelThreeCards((oldCards) => [card, ...oldCards]);
+          const isFamiliar = familiarLevelThreeChineseCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelThreeChineseCards((oldCards) => [
+              card,
+              ...oldCards,
+            ]);
+          }
         } else if (card.familiar === 4) {
-          setFamiliarLevelFourCards((oldCards) => [card, ...oldCards]);
+          const isFamiliar = familiarLevelFourChineseCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelFourChineseCards((oldCards) => [card, ...oldCards]);
+          }
         } else if (card.familiar === 5) {
-          setFamiliarLevelFiveCards((oldCards) => [card, ...oldCards]);
+          const isFamiliar = familiarLevelFiveChineseCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelFiveChineseCards((oldCards) => [card, ...oldCards]);
+          }
         }
       }
+      console.log(familiarLevelOneChineseCards);
+    }
+  }
+
+  function deleteLeftOver() {
+    if (language === "english") {
+      setFamiliarLevelOneEnglishCards((oldCards) =>
+        oldCards.filter((card) => card.familiar === 1)
+      );
+      setFamiliarLevelTwoEnglishCards((oldCards) =>
+        oldCards.filter((card) => card.familiar === 2)
+      );
+      setFamiliarLevelThreeEnglishCards((oldCards) =>
+        oldCards.filter((card) => card.familiar === 3)
+      );
+      setFamiliarLevelFourEnglishCards((oldCards) =>
+        oldCards.filter((card) => card.familiar === 4)
+      );
+      setFamiliarLevelFiveEnglishCards((oldCards) =>
+        oldCards.filter((card) => card.familiar === 5)
+      );
+      console.log(familiarLevelOneEnglishCards);
+      console.log(familiarLevelTwoEnglishCards);
+      console.log(familiarLevelThreeEnglishCards);
+      console.log(familiarLevelFourEnglishCards);
+      console.log(familiarLevelFiveEnglishCards);
+    } else if (language === "chinese") {
+      setFamiliarLevelOneChineseCards((oldCards) =>
+        oldCards.filter((card) => card.familiar === 1)
+      );
+      setFamiliarLevelTwoChineseCards((oldCards) =>
+        oldCards.filter((card) => card.familiar === 2)
+      );
+      setFamiliarLevelThreeChineseCards((oldCards) =>
+        oldCards.filter((card) => card.familiar === 3)
+      );
+      setFamiliarLevelFourChineseCards((oldCards) =>
+        oldCards.filter((card) => card.familiar === 4)
+      );
+      setFamiliarLevelFiveChineseCards((oldCards) =>
+        oldCards.filter((card) => card.familiar === 5)
+      );
+      console.log(familiarLevelOneChineseCards);
+      console.log(familiarLevelTwoChineseCards);
+      console.log(familiarLevelThreeChineseCards);
+      console.log(familiarLevelFourChineseCards);
+      console.log(familiarLevelFiveChineseCards);
     }
   }
 
@@ -66,7 +180,9 @@ export default function RankedButtons({ item }) {
         return card;
       });
       setEnglishCards(updateArr);
+      console.log(englishCards);
       getLevel();
+      deleteLeftOver();
     } else if (language === "chinese") {
       const updateArr = chineseCards.map((card) => {
         if (card.id === currentCard.id) {
@@ -75,13 +191,10 @@ export default function RankedButtons({ item }) {
         return card;
       });
       setChineseCards(updateArr);
+      console.log(chineseCards);
       getLevel();
+      deleteLeftOver();
     }
-    console.log(familiarLevelOneCards);
-    console.log(familiarLevelTwoCards);
-    console.log(familiarLevelThreeCards);
-    console.log(familiarLevelFourCards);
-    console.log(familiarLevelFiveCards);
   }
 
   const numArray = [1, 2, 3, 4, 5];

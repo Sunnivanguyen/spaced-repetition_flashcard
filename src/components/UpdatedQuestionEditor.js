@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../Context";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
+
 export default function UpdatedQuestionEditor() {
   const { setUpdatedQuestion, currentCard } = useContext(Context);
   const placeholder = "Question";
@@ -11,9 +12,11 @@ export default function UpdatedQuestionEditor() {
 
   useEffect(() => {
     if (quill) {
-      quill.clipboard.dangerouslyPasteHTML(`<p>${currentCard.question}</p>`);
+      quill.clipboard.dangerouslyPasteHTML(currentCard.question);
+      quill.clipboard.dangerouslyPasteHTML(currentCard.question.length, "");
+
       quill.on("text-change", (delta, oldDelta, source) => {
-        setUpdatedQuestion(quill.getText());
+        setUpdatedQuestion(quill.root.innerHTML);
       });
     }
   }, [quill, setUpdatedQuestion, currentCard]);

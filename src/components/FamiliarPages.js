@@ -6,13 +6,15 @@ export default function FamiliarPages() {
     <>
       {numArray.map((num) => {
         return (
-          <Link to={`/familiarCards-level${num}_page`}>
-            <div className="familiar-card" key={`level${num}_page`}>
-              <div className="familiar-card_item">
-                <h1>{num}</h1>
+          <div key={`to-level${num}_page`}>
+            <Link to={`/familiarCards-level${num}_page`}>
+              <div className="familiar-card">
+                <div className="familiar-card_item">
+                  <h1>{num}</h1>
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         );
       })}
     </>

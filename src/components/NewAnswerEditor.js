@@ -3,7 +3,7 @@ import { Context } from "../Context";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 export default function NewAnswerEditor() {
-  const { setAnswer } = useContext(Context);
+  const { answer, setAnswer } = useContext(Context);
   const placeholder = "Answer";
   const { quill, quillRef } = useQuill({
     placeholder,
@@ -11,11 +11,14 @@ export default function NewAnswerEditor() {
 
   useEffect(() => {
     if (quill) {
+      const text = quill.getText();
+      quill.clipboard.dangerouslyPasteHTML(answer);
+      quill.clipboard.dangerouslyPasteHTML(text.length, "");
       quill.on("text-change", (delta, oldDelta, source) => {
-        setAnswer(quill.getText());
+        setAnswer(quill.root.innerHTML);
       });
     }
-  }, [quill, setAnswer]);
+  }, [quill, answer, setAnswer]);
   return (
     <>
       <div className="answer">

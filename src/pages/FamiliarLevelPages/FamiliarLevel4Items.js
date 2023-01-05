@@ -7,21 +7,36 @@ import ReviewCard from "../../components/ReviewCard";
 import EditEnglishCard from "../../components/EditEnglishCard";
 import EditChineseCard from "../../components/EditChineseCard";
 
-export default function FamiliarLevel4Items() {
+export default function FamiliarLevel4Items({
+  toDefaultFamiliarLevel,
+  deleteLeftOver,
+}) {
   const {
     language,
-    familiarLevelFourCards,
-    setFamiliarLevelFourCards,
+    familiarLevelFourEnglishCards,
+    setFamiliarLevelFourEnglishCards,
+    familiarLevelFourChineseCards,
+    setFamiliarLevelFourChineseCards,
     isReviewed,
     isEdited,
     reviewCard,
+    setIsEdited,
   } = useContext(Context);
 
   function deleteFamiliarCard(event, cardId) {
-    event.stopPropagation();
-    setFamiliarLevelFourCards((oldCards) =>
-      oldCards.filter((card) => card.id !== cardId)
-    );
+    event.stopPropagation(cardId);
+    
+    if (language === "english") {
+      setFamiliarLevelFourEnglishCards((oldCards) =>
+        oldCards.filter((card) => card.id !== cardId)
+      );
+    } else if (language === "chinese") {
+      setFamiliarLevelFourChineseCards((oldCards) =>
+        oldCards.filter((card) => card.id !== cardId)
+      );
+    }
+    toDefaultFamiliarLevel(cardId);
+    deleteLeftOver();
   }
 
   return (
@@ -34,24 +49,48 @@ export default function FamiliarLevel4Items() {
         </Link>
       </div>
       <div className="familiar-card_grid">
-        {familiarLevelFourCards.map((item) => (
-          <div key={nanoid()} className="card">
-            <div
-              className={`card-item ${item.type}`}
-              onClick={(e) => reviewCard(e, item.id)}
-            >
-              <i className="ri-edit-2-line ri-lg"></i>
-              <i
-                className="ri-delete-bin-6-line ri-lg"
-                onClick={(event) => deleteFamiliarCard(event, item.id)}
-              ></i>
-              <div className="card-body">{item.question}</div>
+        {language === "english" &&
+          familiarLevelFourEnglishCards.map((item) => (
+            <div key={nanoid()} className="card">
+              <div
+                className={`card-item ${item.type}`}
+                onClick={(e) => reviewCard(e, item.id)}
+              >
+                <i
+                  className="ri-edit-2-line ri-lg"
+                  onClick={() => setIsEdited(!isEdited)}
+                ></i>
+                <i
+                  className="ri-delete-bin-6-line ri-lg"
+                  onClick={(event) => deleteFamiliarCard(event, item.id)}
+                ></i>
+                <div className="card-body">{item.question}</div>
+              </div>
+              {isReviewed && <ReviewCard item={item} />}
+              {isEdited && <EditEnglishCard />}
             </div>
-            {isReviewed && <ReviewCard item={item} />}
-            {isEdited && language === "english" && <EditEnglishCard />}
-            {isEdited && language === "chinese" && <EditChineseCard />}
-          </div>
-        ))}
+          ))}
+        {language === "chinese" &&
+          familiarLevelFourChineseCards.map((item) => (
+            <div key={nanoid()} className="card">
+              <div
+                className={`card-item ${item.type}`}
+                onClick={(e) => reviewCard(e, item.id)}
+              >
+                <i
+                  className="ri-edit-2-line ri-lg"
+                  onClick={() => setIsEdited(!isEdited)}
+                ></i>
+                <i
+                  className="ri-delete-bin-6-line ri-lg"
+                  onClick={(event) => deleteFamiliarCard(event, item.id)}
+                ></i>
+                <div className="card-body">{item.question}</div>
+              </div>
+              {isReviewed && <ReviewCard item={item} />}
+              {isEdited && <EditChineseCard />}
+            </div>
+          ))}
       </div>
     </div>
   );
