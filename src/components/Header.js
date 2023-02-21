@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { Context } from "../Context";
 
 export default function Header() {
-  const { language, setLanguage } = useContext(Context);
+  const { language, setLanguage, darkMode, toggleDarkMode } =
+    useContext(Context);
   function chooseLanguage() {
     if (language === "english") {
       return <h2 className="main-title">English FlashCards</h2>;
@@ -12,7 +13,7 @@ export default function Header() {
     } else return <h2 className="main-title">Spaced Repetition</h2>;
   }
   return (
-    <div className="header">
+    <nav className={`header ${darkMode ? "dark" : ""}`}>
       <div className="header-home">
         <Link to="/">
           <i
@@ -26,12 +27,14 @@ export default function Header() {
       <div className="toggler">
         <div className="toggler-themes">
           <p className="toggler--light">Light</p>
-          <div className="toggler--slider">
-            <i class="ri-checkbox-blank-circle-fill"></i>
+          <div className="toggler--slider" onClick={toggleDarkMode}>
+            <i
+              class={`ri-checkbox-blank-circle-fill ${darkMode ? "dark" : ""}`}
+            ></i>
           </div>
-          <p className="toggler---dark">Dark</p>
+          <p className="toggler--dark">Dark</p>
         </div>
-        <nav className="toggler-language">
+        <div className="toggler-language">
           <Link to="/englishCard_page">
             <h3
               className="toggler--english"
@@ -49,8 +52,8 @@ export default function Header() {
               Chinese
             </h3>
           </Link>
-        </nav>
+        </div>
       </div>
-    </div>
+    </nav>
   );
 }

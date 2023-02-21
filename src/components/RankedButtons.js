@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../Context";
 import ButtonStyled from "./ButtonStyled";
 
-export default function RankedButtons({ item }) {
+export default function RankedButtons() {
   const {
     language,
     englishCards,
@@ -30,6 +30,7 @@ export default function RankedButtons({ item }) {
     familiarLevelFiveChineseCards,
     setFamiliarLevelFiveChineseCards,
     currentCard,
+    darkMode,
   } = useContext(Context);
 
   function getLevel() {
@@ -205,10 +206,10 @@ export default function RankedButtons({ item }) {
         return (
           <button
             key={num}
-            className="ranked-btn btn-styled"
+            className={`ranked-btn btn-styled ${darkMode ? "dark" : ""}`}
             onClick={(e) => setFamiliarLevels(e, num)}
           >
-            <ButtonStyled btnName={num} />
+            <ButtonStyled btnName={num} darkMode={darkMode} />
           </button>
         );
       })}

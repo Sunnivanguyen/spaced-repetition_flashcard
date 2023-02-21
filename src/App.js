@@ -40,6 +40,7 @@ function App() {
     setFamiliarLevelFourChineseCards,
     familiarLevelFiveChineseCards,
     setFamiliarLevelFiveChineseCards,
+    darkMode,
   } = useContext(Context);
   const arr = [1, 2, 3, 4, 5];
 
@@ -149,7 +150,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className={`background-color ${darkMode ? "dark" : ""}`}>
       <Header />
       <Routes>
         <Route exact path="/" element={<HomePage />} />
@@ -162,7 +163,7 @@ function App() {
             element={getPageAdress(item)}
           />
         ))}
-        <Route path="/englishCard_page" element={<EnglishCardPage  />} />
+        <Route path="/englishCard_page" element={<EnglishCardPage />} />
         <Route path="/chineseCard_page" element={<ChineseCardPage />} />
       </Routes>
     </div>

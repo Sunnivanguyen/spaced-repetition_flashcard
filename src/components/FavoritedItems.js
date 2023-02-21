@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import parse from "html-react-parser";
 import { Context } from "../Context";
 import ReviewCard from "./ReviewCard";
 import EditEnglishCard from "./EditEnglishCard";
@@ -24,6 +25,7 @@ export default function FavoritedItems() {
     setFavoriteEnglishItems,
     setFavoriteChineseItems,
     currentCard,
+    darkMode,
   } = useContext(Context);
 
   useEffect(() => {
@@ -130,18 +132,20 @@ export default function FavoritedItems() {
             key={`${item.id}_favorite`}
           >
             <div
-              className={`card-item ${item.type}`}
+              className={`card-item ${item.type} ${darkMode ? "dark" : ""}`}
               onClick={(e) => reviewCard(e, item.id)}
             >
               <i
-                className="ri-edit-2-line ri-lg"
+                className={`ri-edit-2-line ri-lg ${darkMode ? "dark" : ""}`}
                 onClick={(event) => editFavoriteCard(event, item.id)}
               ></i>
               <i
-                className="ri-delete-bin-6-line ri-lg"
+                className={`ri-delete-bin-6-line ri-lg ${
+                  darkMode ? "dark" : ""
+                }`}
                 onClick={(event) => deleteFavoriteCard(event, item.id)}
               ></i>
-              <div className="card-body">{item.question}</div>
+              <div className="card-body">{parse(item.question)}</div>
             </div>
             {isReviewed && <ReviewCard item={item} />}
             {isEdited && <EditEnglishCard />}
@@ -156,18 +160,20 @@ export default function FavoritedItems() {
             key={`${item.id}_favorite`}
           >
             <div
-              className={`card-item ${item.type}`}
+              className={`card-item ${item.type} ${darkMode ? "dark" : ""}`}
               onClick={(e) => reviewCard(e, item.id)}
             >
               <i
-                className="ri-edit-2-line ri-lg"
+                className={`ri-edit-2-line ri-lg ${darkMode ? "dark" : ""}`}
                 onClick={(event) => editCard(event, item.id)}
               ></i>
               <i
-                className="ri-delete-bin-6-line ri-lg"
+                className={`ri-delete-bin-6-line ri-lg ${
+                  darkMode ? "dark" : ""
+                }`}
                 onClick={(event) => deleteFavoriteCard(event, item.id)}
               ></i>
-              <div className="card-body">{item.question}</div>
+              <div className="card-body">{parse(item.question)}</div>
             </div>
             {isReviewed && <ReviewCard item={item} />}
             {isEdited && <EditChineseCard />}

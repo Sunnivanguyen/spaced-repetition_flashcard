@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import parse from "html-react-parser";
 import { Context } from "../../Context";
 import ButtonStyled from "../../components/ButtonStyled";
 import { Link } from "react-router-dom";
@@ -19,7 +20,9 @@ export default function FamiliarLevel2Items({
     setFamiliarLevelTwoChineseCards,
     isReviewed,
     isEdited,
+    editCard,
     reviewCard,
+    darkMode,
   } = useContext(Context);
 
   function deleteFamiliarCard(event, cardId) {
@@ -38,11 +41,11 @@ export default function FamiliarLevel2Items({
   }
 
   return (
-    <div className="container">
+    <div className={`container ${darkMode ? "dark" : ""}`}>
       <div className="custom-grid">
         <Link to="/familiarCard_page">
           <button className="back-card btn-styled ">
-            <ButtonStyled btnName={"Back"} />
+            <ButtonStyled btnName={"Back"} darkMode={darkMode} />
           </button>
         </Link>
       </div>
@@ -51,15 +54,20 @@ export default function FamiliarLevel2Items({
           familiarLevelTwoEnglishCards.map((item) => (
             <div key={nanoid()} className="card">
               <div
-                className={`card-item ${item.type}`}
+                className={`card-item ${item.type} ${darkMode ? "dark" : ""}`}
                 onClick={(e) => reviewCard(e, item.id)}
               >
-                <i className="ri-edit-2-line ri-lg"></i>
                 <i
-                  className="ri-delete-bin-6-line ri-lg"
+                  className={`ri-edit-2-line ri-lg ${darkMode ? "dark" : ""}`}
+                  onClick={(event) => editCard(event, item.id)}
+                ></i>
+                <i
+                  className={`ri-delete-bin-6-line ri-lg ${
+                    darkMode ? "dark" : ""
+                  }`}
                   onClick={(event) => deleteFamiliarCard(event, item.id)}
                 ></i>
-                <div className="card-body">{item.question}</div>
+                <div className="card-body">{parse(item.question)}</div>
               </div>
               {isReviewed && <ReviewCard item={item} />}
               {isEdited && <EditEnglishCard />}
@@ -69,15 +77,20 @@ export default function FamiliarLevel2Items({
           familiarLevelTwoChineseCards.map((item) => (
             <div key={nanoid()} className="card">
               <div
-                className={`card-item ${item.type}`}
+                className={`card-item ${item.type} ${darkMode ? "dark" : ""}`}
                 onClick={(e) => reviewCard(e, item.id)}
               >
-                <i className="ri-edit-2-line ri-lg"></i>
                 <i
-                  className="ri-delete-bin-6-line ri-lg"
+                  className={`ri-edit-2-line ri-lg ${darkMode ? "dark" : ""}`}
+                  onClick={(event) => editCard(event, item.id)}
+                ></i>
+                <i
+                  className={`ri-delete-bin-6-line ri-lg ${
+                    darkMode ? "dark" : ""
+                  }`}
                   onClick={(event) => deleteFamiliarCard(event, item.id)}
                 ></i>
-                <div className="card-body">{item.question}</div>
+                <div className="card-body">{parse(item.question)}</div>
               </div>
               {isReviewed && <ReviewCard item={item} />}
               {isEdited && <EditChineseCard />}

@@ -7,12 +7,12 @@ import ButtonStyled from "./ButtonStyled";
 
 const StyledPopUpBackdrop = styled.div`
   position: fixed;
-  height: 100%;
-  width: 100%;
+  z-index: 2;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f7f1f185;
   left: 0;
   top: 0;
   display: none;
@@ -21,6 +21,8 @@ const StyledPopUpBackdrop = styled.div`
   }
 `;
 const StyledCreateCard = styled.div`
+  position: absolute;
+  top: 105px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,8 +41,22 @@ const StyledCreateCard = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.18);
 `;
 export default function NewChineseCard() {
-  const { isCreated, setIsCreated, toAnswer,setToAnswer, createChineseCard } =
-    useContext(Context);
+  const {
+    isCreated,
+    setIsCreated,
+    toAnswer,
+    setToAnswer,
+    createChineseCard,
+    darkMode,
+  } = useContext(Context);
+
+  function goAnswer() {
+    setToAnswer(false);
+  }
+
+  function backQuestion() {
+    setToAnswer(true);
+  }
 
   function closeChineseEditorEl() {
     setToAnswer(false);
@@ -50,25 +66,34 @@ export default function NewChineseCard() {
   return (
     <StyledPopUpBackdrop
       id="backdrop_create-chineseCard"
-      className={isCreated ? "show_new-card" : ""}
+      className={isCreated ? `show_new-card ${darkMode ? "dark" : ""}` : ""}
     >
-      <StyledCreateCard id="popup_create-chineseCard">
-        <i className="ri-close-fill ri-xl" onClick={closeChineseEditorEl}></i>
+      <StyledCreateCard
+        id="popup_create-chineseCard"
+        className={`popup_create-card ${darkMode ? "dark" : ""}`}
+      >
         <i
-          className="ri-arrow-left-s-line ri-xl"
-          onClick={() => setToAnswer(false)}
+          className={`ri-close-fill ri-xl ${darkMode ? "dark" : ""}`}
+          onClick={closeChineseEditorEl}
         ></i>
         <i
-          className="ri-arrow-right-s-line ri-xl"
-          onClick={() => setToAnswer(true)}
+          className={`ri-arrow-left-s-line ri-xl ${darkMode ? "dark" : ""}`}
+          onClick={() => goAnswer()}
         ></i>
-        <div className="create-card">
+        <i
+          className={`ri-arrow-right-s-line ri-xl ${darkMode ? "dark" : ""}`}
+          onClick={() => backQuestion()}
+        ></i>
+        <div className={`create-card ${darkMode ? "dark" : ""}`}>
           {toAnswer ? <NewAnswerEditor /> : <NewQuestionEditor />}
         </div>
         <div className="save-btn_box">
           <>
-            <button className="save-btn btn-styled" onClick={createChineseCard}>
-              <ButtonStyled btnName={"Save"} />
+            <button
+              className={`save-btn btn-styled ${darkMode ? "dark" : ""}`}
+              onClick={createChineseCard}
+            >
+              <ButtonStyled btnName={"Save"} darkMode={darkMode} />
             </button>
           </>
         </div>

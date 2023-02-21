@@ -6,14 +6,13 @@ import RankedButtons from "./RankedButtons";
 import parse from "html-react-parser";
 
 const StyledPopUpBackdrop = styled.div`
-  position: absolute;
-  z-index: 1;
+  position: fixed;
+  z-index: 2;
   height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f7f1f185;
   left: 0;
   top: 0;
   display: none;
@@ -22,14 +21,15 @@ const StyledPopUpBackdrop = styled.div`
   }
 `;
 const StyledReviewCard = styled.div`
+  position: absolute;
+  top: 105px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(47, 47, 47, 0.25);
   height: fit-content;
   width: fit-content;
   padding: 30px 40px;
-  background: #d62828;
   backdrop-filter: blur(7px);
   -webkit-backdrop-filter: blur(7px);
   border-radius: 10px;
@@ -44,6 +44,7 @@ export default function ReviewCard({ item }) {
     englishCards,
     chineseCards,
     currentCard,
+    darkMode,
   } = useContext(Context);
   const [flip, setFlip] = useState(false);
   const [height, setHeight] = useState("initial");
@@ -111,21 +112,34 @@ export default function ReviewCard({ item }) {
   return (
     <StyledPopUpBackdrop
       id="backdrop_review-card"
-      className={isReviewed ? "show_review-card" : ""}
+      className={isReviewed ? `show_review-card ${darkMode ? "dark" : ""}` : ""}
     >
-      <StyledReviewCard id="popup_review-card">
+      <StyledReviewCard
+        id="popup_review-card"
+        className={`popup_review_card ${darkMode ? "dark" : ""}`}
+      >
         <i
-          className="ri-close-fill ri-xl"
+          className={`ri-close-fill ri-xl ${darkMode ? "dark" : ""}`}
           onClick={() => setIsReviewed(false)}
         ></i>
-        <i className="ri-arrow-left-s-line ri-xl" onClick={getBack}></i>
-        <i className="ri-arrow-right-s-line ri-xl" onClick={toTheNext}></i>
+        <i
+          className={`ri-arrow-left-s-line ri-xl ${darkMode ? "dark" : ""}`}
+          onClick={getBack}
+        ></i>
+        <i
+          className={`ri-arrow-right-s-line ri-xl ${darkMode ? "dark" : ""}`}
+          onClick={toTheNext}
+        ></i>
         <div
-          className={`card-reviewed ${flip ? "flip" : ""}`}
+          className={`card-reviewed ${flip ? "flip" : ""}  ${
+            darkMode ? "dark" : ""
+          }`}
           onClick={flipCard}
         >
           <div
-            className={`card-body_reviewed ${currentCard.type}`}
+            className={`card-body_reviewed ${currentCard.type}  ${
+              darkMode ? "dark" : ""
+            }`}
             style={{ height: height }}
           >
             <div
@@ -159,7 +173,7 @@ export default function ReviewCard({ item }) {
             />
           </div>
         </div>
-        <RankedButtons item={item} />
+        <RankedButtons />
       </StyledReviewCard>
     </StyledPopUpBackdrop>
   );

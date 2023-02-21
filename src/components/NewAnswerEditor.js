@@ -2,8 +2,9 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../Context";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
+
 export default function NewAnswerEditor() {
-  const { answer, setAnswer } = useContext(Context);
+  const { preAnswer, setPreAnswer } = useContext(Context);
   const placeholder = "Answer";
   const { quill, quillRef } = useQuill({
     placeholder,
@@ -11,14 +12,12 @@ export default function NewAnswerEditor() {
 
   useEffect(() => {
     if (quill) {
-      const text = quill.getText();
-      quill.clipboard.dangerouslyPasteHTML(answer);
-      quill.clipboard.dangerouslyPasteHTML(text.length, "");
+
       quill.on("text-change", (delta, oldDelta, source) => {
-        setAnswer(quill.root.innerHTML);
+        setPreAnswer(quill.root.innerHTML);
       });
     }
-  }, [quill, answer, setAnswer]);
+  }, [quill, preAnswer, setPreAnswer]);
   return (
     <>
       <div className="answer">

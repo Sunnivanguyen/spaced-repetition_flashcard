@@ -15,6 +15,7 @@ export default function ChineseCardPage() {
     chineseCards,
     currentChineseCard,
     createNewChineseCard,
+    darkMode,
   } = useContext(Context);
   console.log(currentChineseCard);
   return (
@@ -22,39 +23,39 @@ export default function ChineseCardPage() {
       {!language ? (
         <HomePage />
       ) : chineseCards.length > 0 ? (
-        <div className="container">
+        <div className={`container ${darkMode ? "dark" : ""}`}>
           <div className="custom-grid">
             <button
               className="new-flashcard-btn btn-styled"
               onClick={createNewChineseCard}
             >
-              <ButtonStyled btnName={"Create A New Card"} />
+              <ButtonStyled btnName={"Create A New Card"} darkMode={darkMode} />
             </button>
             <div className="special-btn-box">
               <Link to="/favoriteCard_page">
                 <button className="favorite-items-btn btn-styled">
-                  <FavoriteButtonStyles />
+                  <FavoriteButtonStyles darkMode={darkMode} />
                 </button>
               </Link>
               <Link to="/familiarCard_page">
                 <button className="familiar-items-btn btn-styled">
-                  <FamiliarButtonStyles />
+                  <FamiliarButtonStyles darkMode={darkMode} />
                 </button>
               </Link>
             </div>
           </div>
-          <div className="card-grid">
+          <div className={`card-grid ${darkMode ? "dark" : ""}`}>
             <CardItems />
           </div>
           {isCreated && <NewChineseCard />}
         </div>
       ) : (
-        <div className="first-card_container">
+        <div className={`first-card_container ${darkMode ? "dark" : ""}`}>
           <button
             className="first-flashcard-btn"
             onClick={createNewChineseCard}
           >
-            <ButtonStyled btnName={"Create A New Card"} />
+            <ButtonStyled btnName={"Create A New Card"} darkMode={darkMode} />
           </button>
           {isCreated && <NewChineseCard />}
         </div>

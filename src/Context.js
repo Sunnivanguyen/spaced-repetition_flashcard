@@ -8,11 +8,18 @@ function ContextProvider(props) {
   const [isEdited, setIsEdited] = useState(false);
   const [isReviewed, setIsReviewed] = useState(false);
   const [toAnswer, setToAnswer] = useState(false);
+  const [preAnswer, setPreAnswer] = useState("");
+  const [preQuestion, setPreQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [question, setQuestion] = useState("");
   const [cardId, setCardId] = useState("");
   const [updatedAnswer, setUpdatedAnswer] = useState("");
   const [updatedQuestion, setUpdatedQuestion] = useState("");
+  const [darkMode, setDarkMode] = useState(true);
+
+  function toggleDarkMode() {
+    setDarkMode((prevMode) => !prevMode);
+  }
 
   useEffect(() => {
     setLanguage(false);
@@ -32,18 +39,20 @@ function ContextProvider(props) {
   function createNewEnglishCard() {
     setIsCreated(true);
     setCardId(nanoid());
-    setQuestion("");
-    setAnswer("");
+    setPreAnswer("");
+    setPreQuestion("");
     setCurrentEnglishCardId(cardId);
   }
 
   function createEnglishCard() {
-    setIsCreated(false);
+    setAnswer(preAnswer);
+    setQuestion(preQuestion);
+
     const newEnglishCard = {
       id: cardId,
       type: "english_card",
-      question: question,
-      answer: answer,
+      question: preQuestion,
+      answer: preAnswer,
       isFavorited: false,
       familiar: 0,
     };
@@ -51,6 +60,7 @@ function ContextProvider(props) {
     setCurrentEnglishCardId(newEnglishCard.id);
     console.log(englishCards);
     setToAnswer(false);
+    setIsCreated(false);
   }
 
   function findCurrentEnglishCard() {
@@ -75,18 +85,20 @@ function ContextProvider(props) {
   function createNewChineseCard() {
     setIsCreated(true);
     setCardId(nanoid());
-    setQuestion("");
-    setAnswer("");
+    setPreQuestion("");
+    setPreAnswer("");
     setCurrentChineseCardId(cardId);
   }
 
   function createChineseCard() {
-    setIsCreated(false);
+    setAnswer(preAnswer);
+    setQuestion(preQuestion);
+
     const newChineseCard = {
       id: cardId,
       type: "chinese_card",
-      question: question,
-      answer: answer,
+      question: preQuestion,
+      answer: preAnswer,
       isFavorited: false,
       familiar: 0,
     };
@@ -94,6 +106,7 @@ function ContextProvider(props) {
     setCurrentChineseCardId(newChineseCard.id);
     console.log(chineseCards);
     setToAnswer(false);
+    setIsCreated(false);
   }
 
   function findCurrentChineseCard() {
@@ -453,8 +466,12 @@ function ContextProvider(props) {
         setIsReviewed,
         toAnswer,
         setToAnswer,
+        preAnswer,
+        setPreAnswer,
         answer,
         setAnswer,
+        preQuestion,
+        setPreQuestion,
         question,
         setQuestion,
         cardId,
@@ -507,6 +524,8 @@ function ContextProvider(props) {
         setFamiliarLevelFourChineseCards,
         familiarLevelFiveChineseCards,
         setFamiliarLevelFiveChineseCards,
+        darkMode,
+        toggleDarkMode,
       }}
     >
       {props.children}

@@ -7,12 +7,12 @@ import ButtonStyled from "./ButtonStyled";
 
 const StyledPopUpBackdrop = styled.div`
   position: fixed;
-  height: 100%;
-  width: 100%;
+  z-index: 2;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f7f1f185;
   left: 0;
   top: 0;
   display: none;
@@ -21,6 +21,8 @@ const StyledPopUpBackdrop = styled.div`
   }
 `;
 const StyledEditCard = styled.div`
+  position: absolute;
+  top: 105px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,6 +51,7 @@ export default function EditChineseCard() {
     updatedQuestion,
     setChineseCards,
     currentChineseCardId,
+    darkMode,
   } = useContext(Context);
 
   function updateChineseCard(event) {
@@ -71,28 +74,34 @@ export default function EditChineseCard() {
   return (
     <StyledPopUpBackdrop
       id="backdrop_edit-chineseCard"
-      className={isEdited ? "show_edit-card" : ""}
+      className={isEdited ? `show_edit-card ${darkMode ? "dark" : ""}` : ""}
     >
-      <StyledEditCard id="popup_edit-chineseCard">
-        <i className="ri-close-fill ri-xl" onClick={closeChineseEditorEl}></i>
+      <StyledEditCard
+        id="popup_edit-chineseCard"
+        className={`popup_edit-card ${darkMode ? "dark" : ""}`}
+      >
         <i
-          className="ri-arrow-left-s-line ri-xl"
+          className={`ri-close-fill ri-xl ${darkMode ? "dark" : ""}`}
+          onClick={closeChineseEditorEl}
+        ></i>
+        <i
+          className={`ri-arrow-left-s-line ri-xl ${darkMode ? "dark" : ""}`}
           onClick={() => setToAnswer(false)}
         ></i>
         <i
-          className="ri-arrow-right-s-line ri-xl"
+          className={`ri-arrow-right-s-line ri-xl ${darkMode ? "dark" : ""}`}
           onClick={() => setToAnswer(true)}
         ></i>
-        <div className="editor">
+        <div className={`editor ${darkMode ? "dark" : ""}`}>
           {toAnswer ? <UpdatedAnswerEditor /> : <UpdatedQuestionEditor />}
         </div>
         <div className="save-btn_box">
           <>
             <button
-              className="save-btn btn-styled"
+              className={`save-btn btn-styled ${darkMode ? "dark" : ""}`}
               onClick={(e) => updateChineseCard(e)}
             >
-              <ButtonStyled btnName={"Save"} />
+              <ButtonStyled btnName={"Save"} darkMode={darkMode} />
             </button>
           </>
         </div>

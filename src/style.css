@@ -14,23 +14,33 @@ p {
   margin: 0;
 }
 :root {
-  --red: rgb(227, 45, 45);
+  --light-red: rgb(227, 45, 45);
+  --light-blue: rgb(22, 47, 77);
+  --light-blue-opacity: rgb(22, 47, 77, 0.8);
+  --blue: rgb(12, 21, 29);
   --dark-red: rgb(183, 28, 28);
+  --dark-red-opacity: rgb(183, 28, 28, 0.9);
+  --dark-blue: rgb(11, 18, 25);
   --shadow: hsl(0deg 0% 0% / 0.25);
+  --light-shadow: rgba(47, 47, 47, 0.25);
 }
+
 .header {
   display: flex;
   font-family: "Catamaran", sans-serif;
   color: white;
-  background-color: var(--red);
+  background-color: var(--light-red);
   align-items: center;
   position: fixed;
-  z-index: 2;
+  z-index: 100;
   top: 0;
   justify-content: space-between;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3);
   width: 100%;
   height: 80px;
+}
+.header.dark {
+  background-color: var(--dark-blue);
 }
 .header-home {
   display: flex;
@@ -38,16 +48,28 @@ p {
   position: relative;
   justify-content: center;
   align-items: center;
-  left: 30px;
+  left: 40px;
 }
 .header-home h3 {
   margin-left: 5px;
 }
+.home-container {
+  height: 100vh;
+  width: 100vw;
+  background-color: white;
+}
+.home-container.dark {
+  background-color: var(--light-blue);
+}
 .home-content {
   position: relative;
   top: 90px;
+  color: var(--light-red);
 }
-.header nav h3 {
+.home-content.dark {
+  color: white;
+}
+.header h3 {
   display: inline-block;
 }
 .main-title {
@@ -56,16 +78,64 @@ p {
 }
 .toggler {
   display: flex;
-  flex-direction: row;
-  width: 280px;
   justify-content: space-between;
-  position: relative;
-  right: 30px;
+  align-items: center;
+  width: 400px;
+  margin-right: 40px;
+}
+.toggler p {
+  font-size: 19px;
+  font-weight: 700;
 }
 .toggler-themes {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+.toggler--slider {
+  width: 31px;
+  height: 16px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-inline: 10px;
+  cursor: pointer;
+  border-radius: 2rem;
+  border: 0.2px solid white;
+  box-sizing: content-box;
+  justify-content: flex-start;
+}
+
+nav.dark .toggler--slider {
+  border-color: white;
+  background-color: white;
+}
+.ri-checkbox-blank-circle-fill {
+  color: var(--dark-red);
+}
+nav.dark .ri-checkbox-blank-circle-fill {
+  color: black;
+}
+
+.toggler--light {
+  color: white;
+}
+
+nav.dark .toggler--light {
+  color: white;
+}
+
+.toggler--dark {
+  color: white;
+}
+
+nav.dark .toggler--dark {
+  color: #ffffff;
+}
+
+nav.dark .toggler--slider {
+  justify-content: flex-end;
 }
 .toggler-language {
   width: 150px;
@@ -81,9 +151,14 @@ p {
   cursor: pointer;
 }
 .container {
-  height: 100%;
-  width: 100%;
+  height: fit-content;
+  width: 100vw;
+  background-color: white;
 }
+.container.dark {
+  background-color: var(--light-blue);
+}
+
 .custom-grid {
   display: flex;
   flex-direction: row;
@@ -98,24 +173,39 @@ p {
 .card-grid {
   position: relative;
   top: 90px;
-  height: fit-content;
+  height: 100vh;
+  width: 100vw;
   display: grid;
-  grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+  padding: 0 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
-
+.card-grid.dark {
+  background-color: var(--light-blue);
+}
 .first-card_container {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
 }
+.first-card_container.dark {
+  background-color: var(--light-blue);
+}
+
 .first-flashcard-btn {
   position: absolute;
-  top: 50%;
   background: transparent;
   border: none;
   padding: 0;
   cursor: pointer;
   transition: filter 250ms;
+  color: white;
+}
+.first-flashcard-btn.dark {
+  color: var(--dark-blue);
 }
 
 .new-flashcard-btn,
@@ -157,11 +247,37 @@ p {
   border-radius: 12px;
   background: var(--dark-red);
 }
+.edge.dark {
+  background-color: var(--dark-blue);
+}
+.ranked-btn .btn-front {
+  padding: 12px 14px 4px 14px;
+  align-self: center;
+  font-size: 19px;
+  color: var(--dark-red);
+  transform: translateY(-4px);
+  background: white;
+}
+.save-btn .btn-front {
+  background: white;
+  color: var(--dark-red);
+  transform: translateY(-3px);
+}
+.ranked-btn .btn-front.dark,
+.save-btn .btn-front.dark {
+  color: var(--dark-blue);
+}
+
 .ranked-btn .edge,
 .save-btn .edge {
-  background: rgb(134, 129, 129);
+  background: var(--dark-red);
   width: 100%;
   height: 100%;
+}
+
+.ranked-btn .edge.dark,
+.save-btn .edge.dark {
+  background-color: var(--dark-blue);
 }
 .special-btn-box {
   display: flex;
@@ -183,17 +299,15 @@ p {
   padding: 12px 32px;
   border-radius: 12px;
   font-size: 1rem;
-  background: var(--red);
+  background: var(--light-red);
   color: white;
   font-weight: 700;
   transform: translateY(-4px);
   transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
 }
-
-.save-btn .btn-front {
-  background: white;
-  color: var(--red);
-  transform: translateY(-3px);
+.btn-front.dark {
+  background-color: white;
+  color: var(--dark-blue);
 }
 
 .first-flashcard-btn:hover .btn-front,
@@ -245,9 +359,13 @@ p {
   position: absolute;
   top: 12px;
   right: 12px;
-  color: white;
+  color: var(--dark-red);
   cursor: pointer;
 }
+.ri-close-fill.dark {
+  color: var(--dark-blue);
+}
+
 .editor,
 .create-card {
   display: flex;
@@ -256,11 +374,15 @@ p {
   font-family: "Catamaran";
   background-color: white;
   color: black;
-  border: 2px solid var(--red);
+  border: 2px solid var(--light-red);
   border-radius: 10px;
   margin: 0;
   padding: 10px;
   justify-content: center;
+}
+.editor.dark,
+.create-card.dark {
+  border-color: var(--dark-blue);
 }
 .question,
 .answer {
@@ -278,7 +400,11 @@ p {
   cursor: pointer;
   position: absolute;
   top: 50%;
-  color: white;
+  color: var(--dark-red);
+}
+.ri-arrow-left-s-line.dark,
+.ri-arrow-right-s-line.dark {
+  color: var(--dark-blue);
 }
 .ri-arrow-left-s-line {
   left: 5px;
@@ -298,13 +424,16 @@ p {
   min-width: 200px;
   background-color: white;
   color: black;
-  border: 2px solid rgb(215, 64, 64);
+  border: 2px solid var(--light-red);
   border-radius: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   transition: 250ms;
+}
+.card-item.dark {
+  border-color: var(--dark-blue);
 }
 .card-item:hover {
   transform: translateY(-5px);
@@ -321,7 +450,7 @@ p {
 .ri-edit-2-line,
 .ri-delete-bin-6-line,
 .heart-icon {
-  color: rgb(215, 64, 64);
+  color: var(--light-red);
   position: absolute;
   cursor: pointer;
 }
@@ -331,16 +460,48 @@ p {
 .ri-delete-bin-6-line {
   right: 5px;
 }
+
 .heart-icon {
   bottom: 10px;
   right: 5px;
 }
+
+.ri-delete-bin-6-line.dark,
+.heart-icon.dark,
+.ri-edit-2-line.dark {
+  color: var(--dark-blue);
+}
+
 .english_card {
   font-family: "Catamaran";
 }
 .chinese_card {
   font-family: "Ma Shan Zheng", cursive;
 }
+.show_review-card,
+.show_edit-card {
+  background-color: var(--dark-red-opacity);
+}
+
+.show_review-card.dark,
+.show_edit-card.dark {
+  background-color: var(--light-blue-opacity);
+}
+.popup_review_card,
+.popup_review_card.dark,
+.popup_edit-card,
+.popup_edit-card.dark,
+.popup_create-card,
+.popup_create-card.dark {
+  background-color: white;
+}
+.show_new-card {
+  background-color: var(--dark-red);
+}
+.show_new-card.dark {
+  background-color: var(--light-blue);
+}
+
 .card-body_reviewed.chinese_card,
 .chinese_card .card-body {
   font-size: 22px;
@@ -348,16 +509,21 @@ p {
 .card-reviewed {
   margin-right: 20px;
   background-color: white;
-  width: 400px;
+  min-width: 400px;
   min-height: 300px;
+  width: fit-content;
+  height: fit-content;
   color: black;
-  border: 2px solid rgb(215, 64, 64);
+  border: 2px solid var(--light-red);
   border-radius: 10px;
   cursor: pointer;
   transition: 250ms;
   transform-style: preserve-3d;
   transform: perspective(1000px) rotateY(var(--rotate-y, 0))
     translateY(var(--translate-y, 0));
+}
+.card-reviewed.dark {
+  border-color: var(--dark-blue);
 }
 .card-body_reviewed {
   width: 100%;
@@ -394,7 +560,7 @@ p {
 
 .rotate-icon {
   height: 35px;
-  background-color: var(--red);
+  background-color: var(--light-red);
   padding: 0 6px;
   border: none;
   border-radius: 50%;
@@ -409,21 +575,8 @@ p {
   box-shadow: 0 0 5px 3px var(--shadow);
 }
 
-.ri-arrow-left-s-line,
-.ri-arrow-right-s-line {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  color: white;
-}
-.ri-arrow-left-s-line {
-  left: 5px;
-}
-.ri-arrow-right-s-line {
-  right: 5px;
-}
 .ri-close-line {
-  color: red;
+  color: var(--dark-red);
   cursor: pointer;
 }
 .ri-check-line {
@@ -437,21 +590,19 @@ p {
   align-items: center;
   justify-content: space-between;
 }
-.ranked-btn .btn-front {
-  padding: 12px 14px 4px 14px;
-  align-self: center;
-  font-size: 19px;
-}
-.ranked-btn .btn-front {
-  background: white;
-  transform: translateY(-4px);
-  color: var(--red);
-}
+
 .familiar-card_grid {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 40px;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  padding: 40px 40px;
+  top: 90px;
+}
+.familiar-card_grid.dark {
+  background-color: var(--light-blue);
 }
 .familiar-card {
   margin: 0;
@@ -461,19 +612,24 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
-  width: 200px;
+  height: 180px;
+  width: 180px;
   font-weight: 700;
   font-size: 40px;
   color: white;
   border: none;
-  background-color: var(--red);
+  background-color: var(--light-red);
   border-radius: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   transition: 250ms;
+}
+.familiar-card_item.dark {
+  color: var(--dark-blue);
+  background-color: white;
+  border-color: var(--dark-blue);
 }
 .familiar-card_item:hover {
   transform: translateY(-5px);
