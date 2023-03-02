@@ -4,6 +4,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 * {
   box-sizing: border-box;
 }
@@ -54,17 +55,20 @@ p {
   margin-left: 5px;
 }
 .home-container {
-  height: 100vh;
-  width: 100vw;
+  max-width: 1500px;
+  min-height: 100vh;
+  height: fit-content;
   background-color: white;
 }
 .home-container.dark {
   background-color: var(--light-blue);
 }
 .home-content {
+  margin: 30px 40px;
   position: relative;
-  top: 90px;
-  color: var(--light-red);
+  top: 100px;
+  color: black;
+  font-family: "Catamaran";
 }
 .home-content.dark {
   color: white;
@@ -151,8 +155,8 @@ nav.dark .toggler--slider {
   cursor: pointer;
 }
 .container {
-  height: fit-content;
-  width: 100vw;
+  max-width: 1500px;
+  height: 100vh;
   background-color: white;
 }
 .container.dark {
@@ -168,13 +172,14 @@ nav.dark .toggler--slider {
   height: 90px;
   position: relative;
   top: 90px;
+  max-width: 1500px;
 }
 
 .card-grid {
   position: relative;
   top: 90px;
-  height: 100vh;
-  width: 100vw;
+  max-width: 1500px;
+  height: fit-content;
   display: grid;
   padding: 0 20px;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -527,8 +532,10 @@ nav.dark .toggler--slider {
 }
 .card-body_reviewed {
   width: 100%;
+  height: fit-content;
   display: flex;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .card-reviewed:hover {

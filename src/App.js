@@ -20,35 +20,29 @@ function App() {
     setEnglishCards,
     chineseCards,
     setChineseCards,
-    familiarLevelOneEnglishCards,
     setFamiliarLevelOneEnglishCards,
-    familiarLevelTwoEnglishCards,
     setFamiliarLevelTwoEnglishCards,
-    familiarLevelThreeEnglishCards,
     setFamiliarLevelThreeEnglishCards,
-    familiarLevelFourEnglishCards,
     setFamiliarLevelFourEnglishCards,
-    familiarLevelFiveEnglishCards,
     setFamiliarLevelFiveEnglishCards,
-    familiarLevelOneChineseCards,
     setFamiliarLevelOneChineseCards,
-    familiarLevelTwoChineseCards,
     setFamiliarLevelTwoChineseCards,
-    familiarLevelThreeChineseCards,
     setFamiliarLevelThreeChineseCards,
-    familiarLevelFourChineseCards,
     setFamiliarLevelFourChineseCards,
-    familiarLevelFiveChineseCards,
     setFamiliarLevelFiveChineseCards,
     darkMode,
+    getLevel,
   } = useContext(Context);
-  const arr = [1, 2, 3, 4, 5];
+
+  useEffect(() => {
+    getLevel();
+  }, [getLevel]);
 
   function toDefaultFamiliarLevel(cardId) {
     if (language === "english") {
       const updateArr = englishCards.map((card) => {
         if (card.id === cardId) {
-          return { ...card, familiar: 0 };
+          return { ...card, familiar: null };
         }
         return card;
       });
@@ -56,7 +50,7 @@ function App() {
     } else if (language === "chinese") {
       const updateArr = chineseCards.map((card) => {
         if (card.id === cardId) {
-          return { ...card, familiar: 0 };
+          return { ...card, familiar: null };
         }
         return card;
       });
@@ -81,11 +75,6 @@ function App() {
       setFamiliarLevelFiveEnglishCards((oldCards) =>
         oldCards.filter((card) => card.familiar === 5)
       );
-      console.log(familiarLevelOneEnglishCards);
-      console.log(familiarLevelTwoEnglishCards);
-      console.log(familiarLevelThreeEnglishCards);
-      console.log(familiarLevelFourEnglishCards);
-      console.log(familiarLevelFiveEnglishCards);
     } else if (language === "chinese") {
       setFamiliarLevelOneChineseCards((oldCards) =>
         oldCards.filter((card) => card.familiar === 1)
@@ -102,50 +91,6 @@ function App() {
       setFamiliarLevelFiveChineseCards((oldCards) =>
         oldCards.filter((card) => card.familiar === 5)
       );
-      console.log(familiarLevelOneChineseCards);
-      console.log(familiarLevelTwoChineseCards);
-      console.log(familiarLevelThreeChineseCards);
-      console.log(familiarLevelFourChineseCards);
-      console.log(familiarLevelFiveChineseCards);
-    }
-  }
-
-  function getPageAdress(item) {
-    if (item === 1) {
-      return (
-        <FamiliarLevel1Items
-          toDefaultFamiliarLevel={toDefaultFamiliarLevel}
-          deleteLeftOver={deleteLeftOver}
-        />
-      );
-    } else if (item === 2) {
-      return (
-        <FamiliarLevel2Items
-          toDefaultFamiliarLevel={toDefaultFamiliarLevel}
-          deleteLeftOver={deleteLeftOver}
-        />
-      );
-    } else if (item === 3) {
-      return (
-        <FamiliarLevel3Items
-          toDefaultFamiliarLevel={toDefaultFamiliarLevel}
-          deleteLeftOver={deleteLeftOver}
-        />
-      );
-    } else if (item === 4) {
-      return (
-        <FamiliarLevel4Items
-          toDefaultFamiliarLevel={toDefaultFamiliarLevel}
-          deleteLeftOver={deleteLeftOver}
-        />
-      );
-    } else if (item === 5) {
-      return (
-        <FamiliarLevel5Items
-          toDefaultFamiliarLevel={toDefaultFamiliarLevel}
-          deleteLeftOver={deleteLeftOver}
-        />
-      );
     }
   }
 
@@ -156,13 +101,56 @@ function App() {
         <Route exact path="/" element={<HomePage />} />
         <Route path="/favoriteCard_page" element={<FavoriteCardPage />} />
         <Route path="/familiarCard_page" element={<FamiliarCardPage />} />
-        {arr.map((item) => (
-          <Route
-            path={`/familiarCards-level${item}_page`}
-            key={`level${item}_page`}
-            element={getPageAdress(item)}
-          />
-        ))}
+        <Route
+          path={`/familiarCards-level1_page`}
+          key={`level1_page`}
+          element={
+            <FamiliarLevel1Items
+              toDefaultFamiliarLevel={toDefaultFamiliarLevel}
+              deleteLeftOver={deleteLeftOver}
+            />
+          }
+        />
+        <Route
+          path={`/familiarCards-level2_page`}
+          key={`level2_page`}
+          element={
+            <FamiliarLevel2Items
+              toDefaultFamiliarLevel={toDefaultFamiliarLevel}
+              deleteLeftOver={deleteLeftOver}
+            />
+          }
+        />
+        <Route
+          path={`/familiarCards-level3_page`}
+          key={`level3_page`}
+          element={
+            <FamiliarLevel3Items
+              toDefaultFamiliarLevel={toDefaultFamiliarLevel}
+              deleteLeftOver={deleteLeftOver}
+            />
+          }
+        />
+        <Route
+          path={`/familiarCards-level4_page`}
+          key={`level4_page`}
+          element={
+            <FamiliarLevel4Items
+              toDefaultFamiliarLevel={toDefaultFamiliarLevel}
+              deleteLeftOver={deleteLeftOver}
+            />
+          }
+        />
+        <Route
+          path={`/familiarCards-level5_page`}
+          key={`level5_page`}
+          element={
+            <FamiliarLevel5Items
+              toDefaultFamiliarLevel={toDefaultFamiliarLevel}
+              deleteLeftOver={deleteLeftOver}
+            />
+          }
+        />
         <Route path="/englishCard_page" element={<EnglishCardPage />} />
         <Route path="/chineseCard_page" element={<ChineseCardPage />} />
       </Routes>

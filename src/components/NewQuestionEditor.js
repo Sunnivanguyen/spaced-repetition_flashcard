@@ -3,7 +3,7 @@ import { Context } from "../Context";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 export default function NewQuestionEditor() {
-  const { preQuestion, setPreQuestion } = useContext(Context);
+  const { question, setQuestion } = useContext(Context);
   const placeholder = "Question";
 
   const { quill, quillRef } = useQuill({
@@ -13,10 +13,10 @@ export default function NewQuestionEditor() {
   useEffect(() => {
     if (quill) {
       quill.on("text-change", (delta, oldDelta, source) => {
-        setPreQuestion(quill.root.innerHTML);
+        setQuestion(quill.root.innerHTML);
       });
     }
-  }, [quill, preQuestion, setPreQuestion]);
+  }, [quill, question, setQuestion]);
 
   return (
     <>

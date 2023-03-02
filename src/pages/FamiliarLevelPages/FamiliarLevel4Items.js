@@ -25,7 +25,7 @@ export default function FamiliarLevel4Items({
     darkMode,
   } = useContext(Context);
 
-  function deleteFamiliarCard(event, cardId) {
+  function deleteFamiliarLevelFourCard(event, cardId) {
     event.stopPropagation(cardId);
 
     if (language === "english") {
@@ -50,7 +50,7 @@ export default function FamiliarLevel4Items({
           </button>
         </Link>
       </div>
-      <div className="familiar-card_grid">
+      <div className={`card-grid ${darkMode ? "dark" : ""}`}>
         {language === "english" &&
           familiarLevelFourEnglishCards.map((item) => (
             <div key={nanoid()} className="card">
@@ -66,7 +66,9 @@ export default function FamiliarLevel4Items({
                   className={`ri-delete-bin-6-line ri-lg ${
                     darkMode ? "dark" : ""
                   }`}
-                  onClick={(event) => deleteFamiliarCard(event, item.id)}
+                  onClick={(event) =>
+                    deleteFamiliarLevelFourCard(event, item.id)
+                  }
                 ></i>
                 <div className="card-body">{parse(item.question)}</div>
               </div>
@@ -89,7 +91,9 @@ export default function FamiliarLevel4Items({
                   className={`ri-delete-bin-6-line ri-lg ${
                     darkMode ? "dark" : ""
                   }`}
-                  onClick={(event) => deleteFamiliarCard(event, item.id)}
+                  onClick={(event) =>
+                    deleteFamiliarLevelFourCard(event, item.id)
+                  }
                 ></i>
                 <div className="card-body">{parse(item.question)}</div>
               </div>

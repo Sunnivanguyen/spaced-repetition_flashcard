@@ -1,7 +1,6 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { Context } from "../Context";
-import rotateIcon from "../images/rotate-icon.png";
 import RankedButtons from "./RankedButtons";
 import parse from "html-react-parser";
 
@@ -36,7 +35,7 @@ const StyledReviewCard = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.18);
 `;
 
-export default function ReviewCard({ item }) {
+export default function ReviewCard() {
   const {
     language,
     isReviewed,
@@ -51,13 +50,11 @@ export default function ReviewCard({ item }) {
   const [count, setCount] = useState(0);
   const frontEl = useRef();
   const backEl = useRef();
-  const checkEl = useRef();
 
   function setMaxHeight() {
     const frontHeight = frontEl.current.getBoundingClientRect().height;
     const backHeight = backEl.current.getBoundingClientRect().height;
-    const checkHeight = checkEl.current.getBoundingClientRect().height;
-    setHeight(Math.max(frontHeight + 80, backHeight + 80, checkHeight + 100));
+    setHeight(Math.max(frontHeight, backHeight + 200));
   }
 
   useEffect(setMaxHeight, [height, currentCard.question, currentCard.answer]);
@@ -160,17 +157,6 @@ export default function ReviewCard({ item }) {
                 ? parse(currentCard.answer)
                 : parse(newCurrentCard.answer)}
             </div>
-          </div>
-          <div
-            className={`rotate-box ${flip ? "back" : "front"}`}
-            ref={checkEl}
-          >
-            <img
-              src={rotateIcon}
-              alt="rotate icon"
-              className="rotate-icon"
-              onClick={flipCard}
-            />
           </div>
         </div>
         <RankedButtons />

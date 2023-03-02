@@ -9,16 +9,8 @@ import FavoriteButtonStyles from "../components/FavoriteButtonStyles";
 import FamiliarButtonStyles from "../components/FamiliarButtonStyles";
 
 export default function EnglishCardPage() {
-  const {
-    language,
-    isCreated,
-    currentEnglishCard,
-    englishCards,
-    createNewEnglishCard,
-    darkMode,
-  } = useContext(Context);
-
-  console.log(currentEnglishCard);
+  const { language, isCreated, englishCards, createNewEnglishCard, darkMode } =
+    useContext(Context);
 
   return (
     <>
@@ -46,7 +38,7 @@ export default function EnglishCardPage() {
               </Link>
             </div>
           </div>
-          <div className={`card-grid ${darkMode? "dark" : ""}`}>
+          <div className={`card-grid ${darkMode ? "dark" : ""}`}>
             <CardItems />
           </div>
           {isCreated && <NewEnglishCard />}

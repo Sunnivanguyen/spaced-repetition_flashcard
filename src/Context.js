@@ -8,8 +8,6 @@ function ContextProvider(props) {
   const [isEdited, setIsEdited] = useState(false);
   const [isReviewed, setIsReviewed] = useState(false);
   const [toAnswer, setToAnswer] = useState(false);
-  const [preAnswer, setPreAnswer] = useState("");
-  const [preQuestion, setPreQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [question, setQuestion] = useState("");
   const [cardId, setCardId] = useState("");
@@ -39,22 +37,22 @@ function ContextProvider(props) {
   function createNewEnglishCard() {
     setIsCreated(true);
     setCardId(nanoid());
-    setPreAnswer("");
-    setPreQuestion("");
+    setAnswer("");
+    setQuestion("");
     setCurrentEnglishCardId(cardId);
   }
 
   function createEnglishCard() {
-    setAnswer(preAnswer);
-    setQuestion(preQuestion);
+    setAnswer(answer);
+    setQuestion(question);
 
     const newEnglishCard = {
       id: cardId,
       type: "english_card",
-      question: preQuestion,
-      answer: preAnswer,
+      question: question,
+      answer: answer,
       isFavorited: false,
-      familiar: 0,
+      familiar: null,
     };
     setEnglishCards((oldCards) => [newEnglishCard, ...oldCards]);
     setCurrentEnglishCardId(newEnglishCard.id);
@@ -85,22 +83,22 @@ function ContextProvider(props) {
   function createNewChineseCard() {
     setIsCreated(true);
     setCardId(nanoid());
-    setPreQuestion("");
-    setPreAnswer("");
+    setQuestion("");
+    setAnswer("");
     setCurrentChineseCardId(cardId);
   }
 
   function createChineseCard() {
-    setAnswer(preAnswer);
-    setQuestion(preQuestion);
+    setAnswer(answer);
+    setQuestion(question);
 
     const newChineseCard = {
       id: cardId,
       type: "chinese_card",
-      question: preQuestion,
-      answer: preAnswer,
+      question: question,
+      answer: answer,
       isFavorited: false,
-      familiar: 0,
+      familiar: null,
     };
     setChineseCards((oldCards) => [newChineseCard, ...oldCards]);
     setCurrentChineseCardId(newChineseCard.id);
@@ -135,10 +133,45 @@ function ContextProvider(props) {
       setCurrentChineseCardId(cardId);
     }
   }
+  function deleteFamiliarCard(cardId) {
+    if (language === "english") {
+      setFamiliarLevelOneEnglishCards((oldCards) =>
+        oldCards.filter((card) => card.id !== cardId)
+      );
+      setFamiliarLevelTwoEnglishCards((oldCards) =>
+        oldCards.filter((card) => card.id !== cardId)
+      );
+      setFamiliarLevelThreeEnglishCards((oldCards) =>
+        oldCards.filter((card) => card.id !== cardId)
+      );
+      setFamiliarLevelFourEnglishCards((oldCards) =>
+        oldCards.filter((card) => card.id !== cardId)
+      );
+      setFamiliarLevelFiveEnglishCards((oldCards) =>
+        oldCards.filter((card) => card.id !== cardId)
+      );
+    } else if (language === "chinese") {
+      setFamiliarLevelOneChineseCards((oldCards) =>
+        oldCards.filter((card) => card.id !== cardId)
+      );
+      setFamiliarLevelTwoChineseCards((oldCards) =>
+        oldCards.filter((card) => card.id !== cardId)
+      );
+      setFamiliarLevelThreeChineseCards((oldCards) =>
+        oldCards.filter((card) => card.id !== cardId)
+      );
+      setFamiliarLevelFourChineseCards((oldCards) =>
+        oldCards.filter((card) => card.id !== cardId)
+      );
+      setFamiliarLevelFiveChineseCards((oldCards) =>
+        oldCards.filter((card) => card.id !== cardId)
+      );
+    }
+  }
 
   function deleteCard(event, cardId) {
     event.stopPropagation();
-
+    deleteFamiliarCard(cardId);
     if (language === "english") {
       setEnglishCards((oldCards) =>
         oldCards.filter((card) => card.id !== cardId)
@@ -352,6 +385,98 @@ function ContextProvider(props) {
     familiarLevelFiveChineseCards,
   ]);
 
+  function getLevel() {
+    if (language === "english") {
+      for (let i = 0; i < englishCards.length; i++) {
+        const card = englishCards[i];
+        if (card.familiar === 1) {
+          const isFamiliar = familiarLevelOneEnglishCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelOneEnglishCards((oldCards) => [card, ...oldCards]);
+            console.log(familiarLevelOneEnglishCards);
+          }
+        } else if (card.familiar === 2) {
+          const isFamiliar = familiarLevelTwoEnglishCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelTwoEnglishCards((oldCards) => [card, ...oldCards]);
+            console.log(familiarLevelTwoEnglishCards);
+          }
+        } else if (card.familiar === 3) {
+          const isFamiliar = familiarLevelThreeEnglishCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelThreeEnglishCards((oldCards) => [
+              card,
+              ...oldCards,
+            ]);
+          }
+        } else if (card.familiar === 4) {
+          const isFamiliar = familiarLevelFourEnglishCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelFourEnglishCards((oldCards) => [card, ...oldCards]);
+          }
+        } else if (card.familiar === 5) {
+          const isFamiliar = familiarLevelFiveEnglishCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelFiveEnglishCards((oldCards) => [card, ...oldCards]);
+          }
+        }
+      }
+    } else if (language === "chinese") {
+      for (let i = 0; i < chineseCards.length; i++) {
+        const card = chineseCards[i];
+        if (card.familiar === 1) {
+          const isFamiliar = familiarLevelOneChineseCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelOneChineseCards((oldCards) => [card, ...oldCards]);
+          }
+        } else if (card.familiar === 2) {
+          const isFamiliar = familiarLevelTwoChineseCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelTwoChineseCards((oldCards) => [card, ...oldCards]);
+          }
+        } else if (card.familiar === 3) {
+          const isFamiliar = familiarLevelThreeChineseCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelThreeChineseCards((oldCards) => [
+              card,
+              ...oldCards,
+            ]);
+          }
+        } else if (card.familiar === 4) {
+          const isFamiliar = familiarLevelFourChineseCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelFourChineseCards((oldCards) => [card, ...oldCards]);
+          }
+        } else if (card.familiar === 5) {
+          const isFamiliar = familiarLevelFiveChineseCards.some(
+            (element) => element.id === card.id
+          );
+          if (!isFamiliar) {
+            setFamiliarLevelFiveChineseCards((oldCards) => [card, ...oldCards]);
+          }
+        }
+      }
+    }
+  }
+
   useEffect(() => {
     if (document.getElementById("backdrop_review-card")) {
       document.getElementById("backdrop_review-card").addEventListener(
@@ -466,12 +591,10 @@ function ContextProvider(props) {
         setIsReviewed,
         toAnswer,
         setToAnswer,
-        preAnswer,
-        setPreAnswer,
+
         answer,
         setAnswer,
-        preQuestion,
-        setPreQuestion,
+
         question,
         setQuestion,
         cardId,
@@ -526,6 +649,7 @@ function ContextProvider(props) {
         setFamiliarLevelFiveChineseCards,
         darkMode,
         toggleDarkMode,
+        getLevel,
       }}
     >
       {props.children}
